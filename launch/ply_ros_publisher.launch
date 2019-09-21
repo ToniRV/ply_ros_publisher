@@ -1,0 +1,12 @@
+<launch>
+  <arg name="frame_id" default="world"/>
+  <arg name="ply_filepath" default="
+  /home/tonirv/datasets/euroc/EuRoC/V1_01_easy/mav0/pointcloud0/data.ply"/>
+
+  <node name="ply_ros_publisher" pkg="ply_ros_publisher"
+  type="ply_ros_publisher" output="screen" args="">
+    <remap from="ply_mesh" to="ply_mesh"/>
+    <param name="frame_id" value="$(arg frame_id)"/>
+    <param name="ply_filepath" value="$(arg ply_filepath)"/>
+  </node>
+</launch>
