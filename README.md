@@ -1,12 +1,13 @@
-# ply_ros_publisher
+# PLY ROS publisher
 
-ROS node for ply_ros_publisher
+ROS node to publish a ply file, mainly for RVIZ visualization.
 
 # 1. Installation
 
 ## A. Prerequisities
 
 - [ROS](https://www.ros.org/install/)
+- [PCL](docs.pointclouds.org)
 
 ## B. Installation
 

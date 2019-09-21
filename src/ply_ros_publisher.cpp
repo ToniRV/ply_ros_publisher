@@ -24,7 +24,11 @@ int main(int argc, char *argv[]) {
 
   pcl::PolygonMesh ply_mesh;
   pcl::PLYReader ply_reader;
-  if (ply_reader.read(ply_filepath, ply_mesh), 0) {
+  Eigen::Vector4f origin (0.0,0.0,0.0,0.0);
+  Eigen::Quaternionf quaternion = Eigen::Quaternionf::Identity();
+  int ply_version = 1;
+  int offset = 0;
+  if (ply_reader.read(ply_filepath, ply_mesh, origin, quaternion, ply_version, offset), 0) {
     ROS_FATAL("Could not load PLY file.");
   }
 
@@ -35,6 +39,8 @@ int main(int argc, char *argv[]) {
       nh_private_.advertise<pcl_msgs::PolygonMesh>("ply_mesh", 1, true);
   //  pcl_mesh_msg.header.frame_id = frame_id;
   ply_pub_.publish(pcl_mesh_msg);
+
+  ros::spin();
 
   return EXIT_SUCCESS;
 }

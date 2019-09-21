@@ -1,7 +1,12 @@
 <launch>
   <arg name="frame_id" default="world"/>
+  <!--
   <arg name="ply_filepath" default="
   /home/tonirv/datasets/euroc/EuRoC/V1_01_easy/mav0/pointcloud0/data.ply"/>
+  -->
+  <arg name="ply_filepath" default="
+  /home/tonirv/Code/ROS/flight_goggles_ws/src/voxblox/voxblox_ros/mesh_results/office2_v3.ply"/>
+
 
   <node name="ply_ros_publisher" pkg="ply_ros_publisher"
   type="ply_ros_publisher" output="screen" args="">
