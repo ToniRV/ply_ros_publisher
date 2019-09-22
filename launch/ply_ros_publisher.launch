@@ -1,17 +1,41 @@
 <launch>
-  <arg name="frame_id" default="world"/>
-  <!--
-  <arg name="ply_filepath" default="
-  /home/tonirv/datasets/euroc/EuRoC/V1_01_easy/mav0/pointcloud0/data.ply"/>
-  -->
-  <arg name="ply_filepath" default="
-  /home/tonirv/Code/ROS/flight_goggles_ws/src/voxblox/voxblox_ros/mesh_results/office2_v3.ply"/>
+  <arg name="frame_id"  default="world"/>
+  <!-- load_ply_type: 0: mesh, 1: pcl_xyz_rgb, 2: pcl_xyz_intensity -->
+  <arg name="load_ply_type" default="1"/>
 
+  <!-- Load a Mesh -->
+  <arg name="ply_filepath"
+    default="/home/tonirv/datasets/euroc/EuRoC/V1_01_easy/mav0/pointcloud0/data.ply"
+  if="$(eval arg('load_ply_type') is 0)"/>
+
+  <!-- Load a RGB Pointcloud -->
+  <!--
+  <arg name="ply_filepath"
+    default="/home/tonirv/datasets/euroc/EuRoC/V1_01_easy/mav0/pointcloud0/data.ply"
+  if="$(eval arg('load_ply_type') is 1)"/>
+  -->
+
+  <arg name="ply_filepath"
+    default="/home/tonirv/datasets/euroc/EuRoC/V1_01_easy/mav0/pointcloud0/data_subsampled_and_wo_ceiling.ply"
+  if="$(eval arg('load_ply_type') is 1)"/>
+
+
+  <!-- Load an Intensity Pointcloud -->
+  <arg name="ply_filepath"
+    default="/home/tonirv/datasets/euroc/V1_01_easy/mav0/pointcloud0/data.ply"
+  if="$(eval arg('load_ply_type') is 2)"/>
 
   <node name="ply_ros_publisher" pkg="ply_ros_publisher"
   type="ply_ros_publisher" output="screen" args="">
-    <remap from="ply_mesh" to="ply_mesh"/>
-    <param name="frame_id" value="$(arg frame_id)"/>
+    <remap from="ply_mesh"       to="ply_mesh"/>
+    <remap from="ply_pointcloud" to="ply_pointcloud"/>
+
+    <param name="load_ply_type" value="$(arg load_ply_type)"/>
     <param name="ply_filepath" value="$(arg ply_filepath)"/>
+    <param name="frame_id"     value="$(arg frame_id)"/>
+
+    <!--
+    <rosparam file="$(find ply_ros_publisher)/cfg/euroc_dataset.yaml"/>
+    -->
   </node>
 </launch>
